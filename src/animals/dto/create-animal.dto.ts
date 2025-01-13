@@ -1,12 +1,13 @@
-import { IsNumber, IsString } from 'class-validator';
+import { IsOptional, IsString } from 'class-validator';
 
 export class CreateAnimalDto {
-  @IsNumber()
-  readonly id: number;
-
   @IsString()
   readonly name: string;
 
   @IsString()
   readonly type: string;
+
+  @IsOptional()
+  @IsString({ each: true, always: false })
+  readonly colors: string[];
 }
