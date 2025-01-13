@@ -11,16 +11,19 @@ import {
 import { AnimalsService } from './animals.service';
 import { CreateAnimalDto } from './dto/create-animal.dto';
 import { UpdateAnimalDto } from './dto/update-animal.dto';
+import { PaginationQueryDto } from 'src/common/dto/pagination-query.dto';
+import { Public } from 'src/common/decorators/public.decorator';
 
 @Controller('animals')
 export class AnimalsController {
   constructor(private readonly animalsService: AnimalsService) {}
 
+  @Public()
   @Get()
-  findAll(@Query() paginationQuery) {
-    // const { limit, offset } = paginationQuery;
+  async findAll(@Query() paginationQuery: PaginationQueryDto) {
+    await new Promise((resolve) => setTimeout(resolve, 5000));
 
-    return this.animalsService.findAll();
+    return this.animalsService.findAll(paginationQuery);
   }
 
   @Get(':id')
@@ -35,7 +38,7 @@ export class AnimalsController {
 
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateAnimalDto: UpdateAnimalDto) {
-    return this.animalsService.update(+id, updateAnimalDto);
+    return this.animalsService.update(id, updateAnimalDto);
   }
 
   @Delete(':id')
