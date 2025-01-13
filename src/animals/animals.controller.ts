@@ -18,9 +18,7 @@ export class AnimalsController {
 
   @Get()
   findAll(@Query() paginationQuery) {
-    // const { limit, offset } = paginationQuery;
-
-    return this.animalsService.findAll();
+    return this.animalsService.findAll(paginationQuery);
   }
 
   @Get(':id')
@@ -35,7 +33,7 @@ export class AnimalsController {
 
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateAnimalDto: UpdateAnimalDto) {
-    return this.animalsService.update(+id, updateAnimalDto);
+    return this.animalsService.update(id, updateAnimalDto);
   }
 
   @Delete(':id')
